@@ -15,7 +15,8 @@ jobs:
     steps:
     # - name: Login GHCR
     #   run: echo "${{ secrets.GHCR_TOKEN }}" \ | docker login ghcr.io -u USER --password-stdin
-
+    - name: Checkout Code
+      uses: actions/checkout@v4 # <--- เพิ่มขั้นตอนนี้เสมอ
     - name: Pull & Run
       run: |
         docker compose pull
