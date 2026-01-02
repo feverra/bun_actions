@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: [ self-hosted, linux, prod ]
+    runs-on: [ self-hosted, docker-runner ]
 
     permissions:
       contents: read
