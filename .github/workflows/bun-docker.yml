@@ -16,11 +16,11 @@ jobs:
     # 2️⃣ (Optional) ตรวจสอบว่าใช้ bun.lock จริง
     - name: Check Bun lockfile
       run: |
-        if [ ! -f bun.lock ]; then
-          echo "❌ bun.lock not found"
+        if [ ! -f package.json ]; then
+          echo "❌ package.json not found"
           exit 1
         fi
-        echo "✅ bun.lock found"
+        echo "✅ package.json found"
 
     # 3️⃣ Deploy ไปที่ Server ด้วย Docker Compose
     - name: Deploy with Docker Compose
