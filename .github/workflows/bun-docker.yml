@@ -1,37 +1,23 @@
-name: Bun Docker Compose CI/CD
+name: Deploy Production
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, linux, prod ]
+
+    permissions:
+      contents: read
+      packages: read
 
     steps:
-    # 1️⃣ ดึงโค้ดจาก repo
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    # - name: Login GHCR
+    #   run: echo "${{ secrets.GHCR_TOKEN }}" \ | docker login ghcr.io -u USER --password-stdin
 
-    # 2️⃣ (Optional) ตรวจสอบว่าใช้ bun.lock จริง
-    - name: Check Bun lockfile
+    - name: Pull & Run
       run: |
-        if [ ! -f package.json ]; then
-          echo "❌ package.json not found"
-          exit 1
-        fi
-        echo "✅ package.json found"
-
-    # 3️⃣ Deploy ไปที่ Server ด้วย Docker Compose
-    - name: Deploy with Docker Compose
-      uses: appleboy/ssh-action@v1
-      with:
-        host: ${{ secrets.SERVER_IP }}
-        username: ${{ secrets.SERVER_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          set -e
-          cd /app/bun-project
-          git pull
-          docker compose down
-          docker compose up -d --build
+        docker compose pull
+        docker compose up -d
+        docker image prune -f
