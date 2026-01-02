@@ -6,3 +6,4 @@ const server = Bun.serve({
 });
 
 console.log(`🚀 running on http://localhost:${server.port}`);
+console.log(`🚀 running on http://localhost:${server.port}`);
